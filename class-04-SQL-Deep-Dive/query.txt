@@ -1,0 +1,205 @@
+1. SELECT (Retrieve Data)
+SELECT * FROM "employees";
+SELECT * FROM "public"."employees";
+SELECT emp_no, birth_date FROM "employees";
+
+2.Renaming Columns.
+SELECT emp_no AS a, birth_date FROM "employees";
+
+3.Concat function (Concat between two columns):
+SELECT CONCAT( emp_no, gender) AS empG FROM "employees";
+SELECT concat(emp_no, ' is a ', title) FROM titles;
+SELECT concat(emp_no, ' is a ', title) FROM titles;
+SELECT concat(first_name, ' ', last_name) as "full name" FROM employees;
+
+Aggregation:
+max()
+count()
+min()
+sum()
+avg()
+
+SELECT max( salary ) FROM salaries;
+SELECT min( salary ) FROM salaries;
+SELECT avg( salary ) FROM salaries;
+SELECT sum( salary ) FROM salaries;
+SELECT count( salary ) FROM salaries;
+
+AND | WHERE (filter)
+SELECT first_name, last_name FROM employees
+WHERE first_name='Georgi' AND last_name='Facello'; 
+
+ORDER OF OPERATION
+
+SELECT first_name, last_name FROM employees
+WHERE first_name='Georgi' AND last_name='Facello' AND first_name='Bezalel' AND last_name='Simmel';
+
+SELECT first_name, last_name FROM employees
+WHERE (first_name='Georgi' AND last_name='Facello') OR first_name='Bezalel' AND last_name='Simmel';
+
+SELECT first_name, last_name FROM employees
+WHERE (first_name='Georgi' AND last_name='Facello') OR (first_name='Bezalel' AND last_name='Simmel'); 
+
+
+NOT
+SELECT gender FROM customers
+WHERE NOT gender = 'M';
+
+SELECT gender FROM customers
+WHERE NOT gender = 'M';
+
+SELECT count(age) FROM customers
+WHERE NOT age = 55 AND NOT age=20;
+
+
+IS (Allows to filter values. That are NULL, NOT NULL, True or False)
+SELECT first_name FROM employees
+WHERE first_name IS NOT NULL;;
+
+coalesce (Replace the null value)
+SELECT COALESCE(name, 'no name'), first_name FROM "Student";
+SELECT sum(COALESCE(age, 20)) FROM "Student";
+
+Tricky Null Question
+
+BETWEEN AND (Shorthand filter >= <=)
+SELECT * FROM employees
+WHERE emp_no BETWEEN 1 AND 10004;
+
+
+IN (Check if a value matches any value in a list)
+SELECT * FROM employees WHERE emp_no IN (1,10002)
+
+LIKE (Partial Lookup)(What if you don't known exactly what you are searching)
+SELECT * FROM employees
+WHERE first_name LIKE 'G%ger'; 
+
+LIKE (Partial Lookup)(Incase Sensitive)
+SELECT * FROM employees
+WHERE first_name ILIKE 'G%GER'; 
+
+DATES:
+SHOW TIMEZONE;
+SET TIMEZONE 'UTC';
+
+(Change timezone in system level)
+ALTER  USER postgres SET timezone='UTC';
+ALTER USER education SET timezone-'UTC';
+
+TIMESTAMP (YYYY:MM:DTHH:MM:SS)
+A timestamp is a date with time.
+
+SELECT now()
+
+INSERT  INTO timezone VALUES (
+   TIMESTAMP WITHOUT TIME ZONE '2000-01-01 10:00:00-05'
+   TIMESTAMP WITH TIME ZONE '2000-01-01 10:00:00-05'
+   );
+    
+
+CREATE  TABLE timezone( ts TIMESTAMP with time zone,
+tz TIMESTAMP with time zone
+ )
+
+Date functions(); 2022-05-29 (Date-Format)
+
+SELECT NOW()::date;
+SELECT CURRENT_DATE;
+
+SELECT TO_CHAR(CURRENT_DATE, 'dd/mm/yyyy');  --Learn postgress docs
+SELECT TO_CHAR(CURRENT_DATE, 'DDD');
+
+Data Difference and casting
+SELECT date '1800/01/01';
+
+Age Calculation:
+SELECT AGE('1801/01/01'); --Error
+SELECT AGE(date '1801/01/01'); 
+SELECT AGE(date '1992/11/13', date '1800/01/01'); --Calculate age between
+
+EXTRACT (e.g Extract a day)
+SELECT EXTRACT (DAY FROM date '1992/11/13') AS Day;
+SELECT EXTRACT (YEAR FROM date '1992/11/13') AS Year;
+
+Trucate (Round of date)
+SELECT DATE_TRUNC( 'year',  date '1992/11/13');
+
+INTERVAL (Talk about time in a readable manner):
+Interval Allow us to write queries in a way that mirrors language. 
+
+SELECT * FROM orders WHERE purchaseDate <=now()-interval '30 days';
+SELECT * FROM orders WHERE orderDate <= now()-interval '30 days';
+SELECT * from orders;
+
+DISTINCT (Remove Duplicates)
+Distinct clauses keeps one row for each group of duplicates.
+
+SELECT DISTINCT emp_no FROM employees;
+
+ORDER BY: Sorting (ASC/DSC)
+
+SELECT * FROM customers ORDER BY firstname ASC;
+SELECT * FROM customers ORDER BY firstname DESC;
+SELECT * FROM customers;
+
+Using Expressions
+SELECt * FROM customers ORDER BY LENGTH(name);
+
+
+LENGTH (Expression)
+SELECT firstname, lastname FROM employees 
+ORDER BY LENGTH(first_name) DESC;
+
+SELECT firstname, lastname FROM customers 
+ORDER BY LENGTH(firstname) DESC;
+
+Inner JOIN (Link Column to another table) (Not use where - ON use):
+
+SELECT a.emp_no, b.salary, b.from_date, c.title 
+FROM employees AS a 
+INNER JOIN salaries AS b ON b.emp_no = a.emp_no
+INNER JOIN titles AS c ON c.emp_no = a.emp_no AND c.from_date = b.from_date
+AND (b.from_date + INTERVAL '2 days') = c.from_date
+ORDER BY a.emp_no ASC, b.from_date ASC;
+
+Self-Join:
+
+
+OUTER JOIN:
+SELECT emp.emp_no, dep.emp_no
+FROM employees AS emp
+LEFT JOIN dept_manager AS dep ON emp.emp_no = dep.emp_no
+WHERE dep.emp_no IS NOT NULL;
+
+SELECT count( emp.emp_no )
+FROM employees AS emp
+LEFT JOIN dept_manager AS dep ON emp.emp_no = dep.emp_no
+WHERE dep.emp_no IS NOT NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
