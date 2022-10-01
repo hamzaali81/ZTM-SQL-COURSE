@@ -1,0 +1,1465 @@
+class #03
+1. Employees and Departments in a table.
+SELECT * FROM employees;
+SELECT * FROM departments;
+
+Exercise: How many times has employee 10001 had a raise.
+SELECT * FROM salaries;
+
+Exercise: What Title Does 10006 Have?
+SELECT *, employee = 10006 FROM titles;
+
+class #04
+2. Renaming Columns
+SELECT title AS "Title #"  FROM "titles";
+
+class#05
+3. Column Concatenation.
+Exercise Databse employees Column Concatenation.
+Question:
+- Concatenate the first and last name of the employee into one Column.
+- Rename the Concatenated Column.
+SELECT concat( "emp_no", ' ', "title" ) AS "EMP_TITLE#" FROM titles; 
+SELECT emp_no, concat( "first_name", ' ', "last_name" ) AS "full name" FROM employees; 
+
+Note:
+Text in a single quote.
+Column in a double quote.
+CONCAT('text', 'text')
+CONCAT('COLUMN1', 'COLUMN2')
+
+class # 06 (What is function in sql)
+Function: Takes an input and generate some output.
+A Function is a set of steps that creates a single value.
+Types of function:
+1. Aggregate: All of the data, they take everything and the produce one single value.
+OR: Operate on many records
+
+2. Scalar: All of the data in  a multiple values.
+OR: Operate on each record independently.
+e.g Hamza Ali  HamzaALi
+
+class#07 (Aggregate Functions)
+AVG():   calculates the average of a set of values.
+COUNT(): counts row in a specified table or view.
+MIN():   gets the minimum value in a set of values.
+MAX():   gets the maximim value in a set of values.
+SUM():   calculates the sum of values.
+
+SELECT count( emp_no ) FROM employees;
+SELECT max( emp_no ) FROM employees;
+SELECT min( emp_no ) FROM employees;
+
+class#08
+Exercise:
+1. Get the highest salary available
+2. Get the total Amount of salaries paid.
+
+SELECT max(salary) FROM salaries;
+SELECT sum(salary) FROM salaries;
+
+Exercises:
+-- Question 1: What is the average salary for the company?
+-- Table: Salaries
+SELECT avg( salary ) FROM salaries;
+
+-- Question 2: What year was the youngest person born in the company?
+-- Table: employees
+SELECT max( birth_date ) FROM employees;
+
+
+/*
+ * What database should I use for these exercises?
+ * Name: France
+ */
+-- 
+
+
+-- Question 1: How many towns are there in france?
+-- Table: Towns
+SELECT count(id) FROM towns;
+
+-- BEFORE YOU START
+/*
+ * What database should I use for these exercises?
+ * Name: World
+ */
+-- 
+
+-- Question 1: How many official languages are there?
+-- Table: countrylanguage
+select count(countrycode) from countrylanguage
+where isofficial = true;
+
+-- Question 2: What is the average life expectancy in the world?
+-- Table: country
+select avg( lifeexpectancy ) from country;
+
+-- Question 3: What is the average population for cities in the netherlands?
+-- Table: city
+select AVG(population) from city
+where countrycode = 'NLD';
+
+class#09 (Commenting Your Queries)
+-- Comment all the things
+-- I like having single line comments
+/*
+Multi line comments are also 
+pretty sweet
+*/
+-- Comments describe what is your happening.
+
+Exercise 
+-- Question: SELECT the employee with the name Mayumi Schueller
+-- Question  Comment on your query what is happening 
+
+-- select statement to filter Mayumi Schueller
+SELECT first_name, last_name FROM employees
+
+/*
+filter on first name AND last name to limit the amount of data
+returned and focus the filtering on a single person
+*/
+WHERE first_name = 'Mayumi' AND last_name = 'Schueller';
+
+class#10 (Common select mistakes)
+1. Misspelling commands
+SEELECT
+
+2. USING; INSTEAD OF, OR VICE VERSA
+SELECT first_name; FROM users,
+
+-- 3. USING "INSTEAD';
+
+class#11 (How to filter data);
+WHERE (This is a simple filter)
+
+Exercise:
+Get a list of all female employees
+SELECT first_name FROM 'employees'
+WHERE gender = 'F';
+
+-- How to find multiple search information
+class#12 (AND and OR)
+SELECT first_name, last_name, hire_date FROM employees
+WHERE (first_name = 'Georgi' AND last_name = 'Facello' AND hire_date = '1986-06-26') 
+OR (first_name= 'Bezalel' AND last_name= 'Simmel');
+
+class#13 (Filtering Data)
+Exercise
+-- Database Store
+-- Filter: AND/OR
+
+--1.Question: How many female customers do we have from the state of OREGON(OR) and NEWYORK(NY)
+SELECT gender, state, city FROM customers
+WHERE (state = 'OR' OR state = 'NY') AND gender = 'F';
+
+class#14 (Exercise The Where clause)
+-- 1. Select all records where the City column has the value "Berlin".
+SELECT * FROM customers
+WHERE city = 'Berlin';
+
+--2. Use the NOT keyword to select all records where City is NOT "Berlin".
+SELECT * FROM Customers
+WHERE NOT city= 'Berlin';
+
+--3. Select all records where the CustomerID column has the value 32.
+SELECT * FROM Customers
+WHERE CustomerID = 32;
+
+-- 4. Select all records where the City column has the value 'Berlin' and the PostalCode column has the value 12209.
+SELECT * FROM Customers
+WHERE City = 'Berlin' AND PostalCode = 12209;
+
+-- 5.Select all records where the City column has the value 'Berlin' or 'London'.
+SELECT * FROM Customers
+WHERE City = 'Berlin'OR City = 'London';
+
+class#15 (The NOT Keyword)
+e.g I want to except these person
+SELECT firstName, gender FROM users 
+WHERE NOT gender = 'm';
+
+Exercises:
+-- Question: How many customers are'nt 55
+SELECT count( age ) FROM customers
+WHERE NOt age = 55 AND NOT age = 54;
+
+class#16 (Comparison Operator)
+-- Comparison Operator mostly used in numbers
+-- Question: Who over the age of 44 has an income of 100000
+10 >  20 -- falase (Greater Than: Check if the given value is larger than the outer value. If it's Greater, Then the condition will be true)
+10 !> 20 -- true
+10 !< 20 -- false
+20 < 10  -- true  (Less than: Check If the given value is smaller than the outer value.
+ --  If It's less, then The condition will be true)
+10 >= 9  -- true (Greater Than or equal to) (Check if the given value is larger than or equal the other value. If it's Greater Or Equal, then the condition will be true)
+10 <= 10 -- true  (Less Than or equal to) (Check if the given value is less than or equal the other value. If it's Less Or Equal, then the condition will be true)
+0 = 0    -- true  (Equal To: Check if the given values are equal. If it's equal, then the condition will be true)
+1 != 0 0 <>1   -- true (NOT Equal to: Check if the given values are not equal
+                -- IF It's Equal, Then The condition will be true )
+
+
+-- 0 !> 1  -- true
+-- 0 !< 1  -- false
+
+class#17 (Exercise Comparison)
+
+--1. How many female customers do we have from the state of Oregon (OR)?
+/*
+* Write your query here
+*/
+SELECT * FROM customers
+WHERE gender = 'F' AND state = 'OR';
+
+--2. Who over the age of 44 has an income of 100 000 or more? (excluding 44)
+/*
+* Write your query here
+*/
+SELECT * FROM customers
+WHERE age > 44 AND income >= 100000;
+
+--3. Who between the ages of 30 and 50 has an income less than 50 000?
+-- (include 30 and 50 in the results)
+
+/*
+* Write your query here
+*/
+SELECT age, income FROM customers
+WHERE (age > 30 AND age <50 ) AND (income < 50000);
+--4. What is the average income between the ages of 20 and 50? (Excluding 20 and 50)
+/*
+* Write your query here
+*/
+SELECT  avg( income ) FROM customers
+WHERE (age > 20 AND age <50 );
+
+class # 18 (Logical Operators)
+-- AND
+-- OR
+-- NOT
+
+-- AND
+If Both Boolean Expression are true then it will return results.
+
+SELECT firstName, lastName FROM users WHERE firstName = 'Mo' AND lastName = 'Rinni';
+
+-- OR
+If any Boolean Expression is true.
+Then IT Will return results.
+
+SELECT firstName, lastName 
+FROM users 
+WHERE firstName = 'Mo' AND firstName = 'Andrei';
+
+-- NOT 
+If Any Boolean Expression is not true
+Then it will Return Result
+SELECT firstName, lastName 
+FROM users 
+WHERE NOT firstName = 'Mo';
+
+-- Database Execute query
+ORDER OF OPERATION:
+FROM
+WHERE
+SELECT
+
+class#19 (Operator Precedence)
+
+Operator Precedence:
+A statement having multiple operators is evaluated based on the priority of operators.
+
+How DB deciding and how to executing query?
+
+Operator Precedence:
+
+Paranthesis
+Multiplication/Division
+Subtraction/Addition
+NOT 
+AND 
+OR
+
+If the operators have equal Precedence, 
+then the operators are evaluated directionally, FROM LEFT TO RIGHT OR RIGHT TO LEFT.
+
+Task (Operator Precedence check)
+
+Examples
+Get ME state And gender where you are.
+A female from oregon or you are from NY.
+
+SELECT state, gender FROM customers
+WHERE gender = 'F' AND state = 'OR' OR state = 'NY'; (Wrong)
+
+SELECT state, gender FROM customers
+WHERE gender = 'F' AND state = 'OR' 
+OR gender = 'F' AND state = 'NY'; (Correct) 
+
+SELECT state, gender FROM customers
+WHERE gender = 'F' AND (state = 'OR' OR  state = 'NY'); (Correct) 
+
+class#20 (Operator Precedence part 02)
+
+Priority:
+A statement having multiple operators is evaluated based on the priority OF
+Operator.
+
+Direction:
+If the operators have equal Precedence, 
+then the operators are evaluated directionally, 
+FROM LEFT TO RIGHT OR RIGHT TO LEFT.
+
+age >  20
+AND salary > 1000
+AND gender = 'F'
+AND NOT state= 'NY'
+
+ORDER
+1. NOT FROM NY
+2. OLDER Than 20
+3. Salary > 1000
+4. Gender Female
+
+Direction:
+(age > 20 OR age < 30)
+AND salary > 1000
+AND NOT state = 'NY'
+AND NOT state= 'OR'
+
+ORDER:
+1. AGES 21 AND 29
+2. NOT FROM NY.
+3. NOT FROM OR.
+4. Salary > 1000.
+
+Direction:
+age > 20
+OR age < 30
+AND NOT state = 'NY'
+AND NOT state = 'OR';
+
+ORDER:
+1. AGES 21 and 29.
+2. NOT FROM NY.
+3. NOT FROM OR.
+4. Salary > 1000.
+
+Direction:
+age >  20
+OR age < 30
+AND salary > 1000
+AND NOT state = 'NY'
+AND NOT state = 'OR';
+
+ORDER:
+Filter 1                 Filter 2
+1. Younger than 30.      1. ORDER Than 20.
+2. NOT FROM NY.
+3. NOT FROM OR.
+4. Salary > 1000.
+
+
+Direction:
+age >  20
+OR age < 30
+OR salary > 1000
+
+ORDER
+Filter 1                 Filter 2
+1. Younger than 30       1. OLDER Than 20 
+
+
+Filter 3
+1. Salary > 1000
+
+Priority and Direction:
+(
+    salary > 10000 AND state = 'NY'
+    OR (
+        (age > 20 AND age < 30)
+        AND salary <= 20000
+    )
+) AND gender = 'F';
+
+
+class #21 (Exercise Operator Precedence)
+/* Question 01
+* DB: Store
+* Table: Customers
+* Question: 
+* Select people either under 30 or over 50 with an income above 50000
+* Include people that are 50
+* that are from either Japan or Australia
+*/
+SELECT firstname, income, age from customers
+WHERE income > 50000 AND (age < 30 OR age >= 50)
+and (country = 'Japan' OR country = 'Australia')
+
+/* Question 02
+* DB: Store
+* Table: Orders
+* Question: 
+* What was our total sales in June of 2004 for orders over 100 dollars?
+*/
+
+SELECT sum(totalamount) FROM orders
+WHERE (orderdate >= '2004-06-01' AND orderdate <= '2004-06-30') AND (totalamount > 100)
+
+class # 22 (Checking For Null values)
+When a record doesnot have a value it is considered empty.
+
+NULL:
+Is the term used to represent a missing/empty values.
+
+What is null?
+A null value is different from a zero value or a field that contains spaces.
+
+Should i use null ?
+1. Be careful.
+2. Be mindful
+3. Be Deliberate
+
+A Contentious issue:
+Null is a Contentious issue no matter what opinion you have people may disagree.
+
+Null is special:
+1 = 1 -- true
+1 != 1 -- false
+null = null  -- null
+null <> null -- null
+
+SELECT NULL = NULL;  -- null
+
+All Roads Lead to null:
+No matter what you do with null it will always be null
+Subtract , Divide and equal.
+
+
+
+class#23 (IS Keyword)
+So How should i use it (Null).
+
+Optional or Required.
+Future Info?
+Rational?
+
+BE Defensive:
+Always check for nulls when necessary.
+1. Filter out nulls
+2. Clean up your data.
+
+The 'IS' Operator
+Allows you to filter on values that are null, not null, True or false.
+
+SELECT * FROM <table> WHERE <field> IS [NOT] NULL; 
+SELECT * FROM <table> WHERE <field> = '' IS [NOT] NULL; 
+
+SELECT * FROM users WHERE age = 20 IS FALSE;
+Everyone that is not 20
+
+How to replace null values?
+
+
+
+class#24 (Null coalescing)
+2. Clean up your data.
+
+Null value substitution:
+Ability To replace null values to operate on the data.
+coalesce returns the first non-null value in a list.
+
+COALESCE:
+SELECT coalesce(<coloumn>, 'Empty') AS coloumn_alias FROM <table>; 
+
+COMBINE COALESCING:
+SELECT coalesce(
+    <coloumn1>,
+    <coloumn1>,
+    <coloumn1>,
+    'Empty' 
+) AS combined_columns 
+ FROM <table>;
+
+ SELECT COALESCE(address2, 'no address'), address2  FROM customers;
+ SELECT sum(coalesce(age, 200)) FROM "Student";
+
+
+ class#25 (coalesce exercises)
+/*
+* DB: https://www.db-fiddle.com/f/PnGNcaPYfGoEDvfexzEUA/0
+* Question: 
+* Assuming a students minimum age for the class is 15, what is the average age of a student?
+*/
+SELECT avg(coalesce(age, 15)) FROM "Student";
+-- 30.4000000000000000
+
+
+/*
+* DB: https://www.db-fiddle.com/f/PnGNcaPYfGoEDvfexzEUA/0
+* Question: 
+* Replace all empty first or last names with a default?
+*/
+SELECT id, coalesce(name, 'fallback'), coalesce(lastName, 'lastName'), age FROM "Student";
+
+
+ class#26 (3 value Logic)
+-- Three-Valued Logic (TRUE - NULL - False)
+-- Besides true and false, The Result of logical expressions can also be unknown.
+-- In most programming languages unknown would often result in false.
+-- The SQL null value "Could be anything"
+-- Nothing Equals null not even null each null could be different.
+-- That's why we use "IS NULL" To check.
+
+Scenario:
+(Null = 1) OR (1=1) --> true
+(NULL=1) AND (0=1)  --> Null
+SELECT <coloumn> FROM <table> WHERE <coloumn> = NULL --> null
+SELECT <coloumn> FROM <table> WHERE <coloumn> IS NULL -->true 
+-- (IS Null checks for unknowns)
+
+-- Strange Scenarios
+SELECT <column> FROM <table> 
+WHERE (<column> = NULL)
+OR (NOT <column> = NULL) --> false (rejected)
+
+SELECT <column> FROM <table> WHERE (<column> IS NULL)
+OR (<column> IS NOT NULL)
+
+
+class#27 (Exercise 3 value)
+/*
+* DB: Store
+* Table: customers
+* Question: adjust the following query to display the null values as "No Address"
+*/
+SELECT address2 
+FROM customers
+
+-- Answer
+SELECT coalesce(address2, "No Address") FROM customers;
+/*
+* DB: Store
+* Table: customers
+* Question: Fix the following query to apply proper 3VL
+*/
+
+SELECT *
+FROM customers
+WHERE COALESCE(address2, null) IS NOT null;
+
+-- Answer
+SELECT * FROM customers
+WHERE address2 IS NOT NULL;
+/*
+* DB: Store
+* Table: customers
+* Question: Fix the following query to apply proper 3VL
+*/
+
+SELECT coalesce(lastName, 'Empty'), * from customers
+where (age IS null);
+
+class#28 (Between + AND)
+Shorthand to match against a range of values.
+
+SELECT <column> FROM <table> WHERE <column> BETWEEN X AND Y;
+SELECT <column> FROM <table> WHERE <column> >= X AND <column> <= Y;
+
+They are same
+-- BETWEEN AND
+-- Note that BETWEEN AND is sensitive to the order of arguments
+
+class#29 (IN Keyword)
+
+Filtering multiple values
+-- What if i want to find multiple values but not write endless and statements?
+
+IN Keyword
+-- Check If A value matches any value in a list of values.
+SELECT * FROM <table> WHERE <column> IN (value1, value2,....)
+
+SELECT * FROM employees 
+WHERE emp_no IN (100001, 100006, 11008);
+
+SELECT * FROM employees 
+WHERE emp_no = 100001 OR emp_no = 100006 OR emp_no = 11008;
+
+
+class#30 (Exercise IN Keyword)
+
+/*
+* DB: Store
+* Table: orders
+* Question: How many orders were made by customer 7888, 1082, 12808, 9623
+*/
+
+SELECT * FROM orders;
+-- Answer
+SELECT * FROM orders
+WHERE customerid IN (7888, 1082, 12808, 9623);
+
+
+/*
+* DB: World
+* Table: city
+* Question: How many cities are in the district of Zuid-Holland, Noord-Brabant and Utrecht?
+*/
+
+SELECT * FROM city;
+-- Answer
+SELECT COUNT(id)
+FROM city
+WHERE district IN ('Zuid-Holland', 'Noord-Brabant', 'Utrecht');
+
+
+
+class#31 (LIKE)
+
+-- Partial Lookups
+-- What if you don't know exactly what you are searching.
+SELECT first_name FROM employees 
+WHERE first_name LIKE 'M%'; -- starts M and % (Everything after)
+
+
+-- Pattern Matching
+-- In order to use like you need to build patterns to match!
+
+%   (Any number of characters)
+_   (1 character)
+
+Use Cases             Meaning
+LIKE '%2'         Fields that end with 2
+LIKE '%2%'        Fields that have 2 anywhere in the value   
+LIKE '_00%'       Fields that have 2 zero's' as the secod and third character and anything after
+LIKE '%200%'      Fields that have 200 anywhere in the value
+LIKE '2_%_%'      Finds any values that start with 2 and are at least 3 characters in length
+LIKE '2__3'       Finds any values in a five-digit number that start with 2 and end with 3
+
+-- LIKE KEYWORD
+-- Postgres Like only does text comparison so we must cast whatever we use to text.
+
+-- Casting
+-- Casting is the act of changing something to something else.
+
+Casting To text
+CAST(salary AS text)
+salary::text
+
+ILIKE Keyword:
+Case Insensitive Matching
+name ILIKE 'MO%';
+
+
+SELECT * FROM employees
+WHERE first_name LIKE 'G%er'; -- (starts G and ends r)
+
+SELECT * FROM employees
+WHERE first_name LIKE 'G%GER'; -- (case insensitive :starts G and ends r)
+
+class# 32 (Exercise LIKE Keyword)
+/*
+* DB: Employees
+* Table: employees
+* Question: Find the age of all employees who's name starts with M.
+* Sample output: https://imgur.com/vXs4093
+* Use EXTRACT (YEAR FROM AGE(birth_date)) we will learn about this in later parts of the course
+*/
+SELECT ..., EXTRACT (YEAR FROM AGE(birth_date)) as "age" FROM employees;
+
+
+/*
+* DB: Employees
+* Table: employees
+* Question: How many people's name start with A and end with R?
+* Expected output: 1846
+*/
+SELECT COUNT(first_name) FROM employees
+WHERE first_name ILIKE 'A%R'; -- (starts G and ends r)
+                                                  
+/*
+* DB: Store
+* Table: customers
+* Question: How many people's zipcode have a 2 in it?.
+* Expected output: 4211 
+*/
+SELECT count( customerid ) FROM customers
+WHERE zip::text LIKE '%2%';
+
+
+
+
+
+/*
+* DB: Store
+* Table: customers
+* Question: How many people's zipcode start with 2 with the 3rd character being a 1.
+* Expected output: 109 
+*/
+SELECT count(customerid) FROM customers
+WHERE zip::text LIKE '2_1%';
+
+/*
+* DB: Store
+* Table: customers
+* Question: Which states have phone numbers starting with 302?
+* Replace null values with "No State"                                                  
+* Expected output: https://imgur.com/AVe6G4c
+*/
+SELECT COALESCE(state, 'No State') as "State" FROM customers
+WHERE phone::text LIKE '302%';
+
+class# 33 (Date and Timezones)
+Dates are Hard. Because of timezone , Because all over live in different place.
+Every database should e in GMT.
+GMT (Greenwich Mean Time)
+
+UTC (Universal Cordinate Time) it is a standard. It is a way to measure time. It is not a timezone.
+No country in the world is using UTC to determine its time. It is a standard.
+
+What the difference?
+GMT: One is a timezone.
+UTC: One is a time standard. 
+
+Scenario:
+App use in all over world and use in UTC.
+
+What's' The difference?
+No Territories
+Use UTC.
+
+Whats the same?
+They share the same current time. But conceptually different.
+
+UTC and GMT are different but why i not GMT?
+Conceptually different. 
+One is time zone and others is time standard.
+
+What should i use?
+SET TIME ZONE 'UTC';
+
+Always use UTC.
+SHOW TIMEZONE;
+
+UTC is standard we want to follow.
+
+SET TIME ZONE 'UTC'; -- (Set Timezone only for the session)
+
+class #34 (Setting up timezones)
+Change Timezone in a system level.
+
+ALTER USER postgres SET timezone='UTC';
+SHOW TIMEZONE;
+
+Some times date with time and date without time.
+
+class#35 (How Do we format date and time)
+How Do Dates Look?
+
+Postgresql USES ISO-8601 -- IS A FORMATING STANDARD.
+This standard want to use in a computer.
+
+How Do Dates Look?
+YYYY-MM-DDTHH:MM:SS
+2017-08-17T12:47:16+02:00
+therefore it is UTC format.
+
+What is a Format?
+A format is a way of representing a data and time.
+
+Timestamp:
+A Timestamp is a Date with Time and Timezone info.
+
+class#36 (Timestamps)
+Timestamp:
+A Timestamp is a Date with Time and Timezone info.
+
+TIMESTAMPS:
+SELECT now();
+
+-- 1800-01-01 00:00:00.00 -5
+-- YYYY-MM-DD HH:MI:SS.MS TZ
+
+CREATE TABLE timezones (
+    ts TIMESTAMP WITHOUT TIME ZONE,
+    tz TIMESTAMP WITH TIME ZONE
+);
+
+INSERT INTO timezones VALUES(
+    TIMESTAMP WITHOUT TIME ZONE '2000-01-01 10:00:00-05',
+    TIMESTAMP WITH TIME ZONE '2000-01-01 10:00:00-05'
+
+);
+
+SELECT * FROM timezones;
+SELECT * FROM timezone;
+
+TIMESTAMPS OR DATES?
+IT DEPENDS ON WHAT you are storing.
+IN Apps use Timestamps.
+
+DATE OPERATORS:
+Postgres gives up operators to help simplify dates.
+
+class#37 (Date Functions)
+
+CURRENT DATE: 
+SELECT NOW()::date;  --OR
+SELECT CURRENT_DATE();  -- 1800-01-01
+
+FORMATTING:
+SELECT TO_CHAR(CURRENT_DATE, 'dd/mm/yyyy'); -- 01/01/1800
+
+Format Modifiers:
+
+Use Postgres docs:
+https://www.postgresql.org/docs/current/functions-formatting.html
+
+Identifier   Meaning
+   D           Day
+   M           Month
+   Y           Year
+
+https://www.postgresql.org/docs/current/functions-formatting.html
+SELECT to_char( real, text );
+SELECT to_char( CURRENT_DATE, 'DDD' ); -- Total days in 365 days
+
+class#38 (Date Difference And Casting);
+
+SELECT now() - '1800/01/01'; -- <no> days HH:MI:SS:MS
+
+Difference:
+Subtracting dates returns the difference in days.
+
+Everything is not a date:
+select date '1800/01/01'; -- this is not a date.
+
+TO DATE:
+Converts a date to a date format for postgres.
+
+class#39 (Age Calculation)
+SELECT AGE('1800/01/01'); -- Error
+
+SELECT AGE(date '1800/01/01'); -- date casting (<no> years <no> mons <no> days)
+SELECT AGE(date '1992/11/13', date '1800/01/01') -- 192 years 10 mons 12 days
+
+class#40 (Extracting Information)
+EXTRACT
+SELECT EXTRACT (DAY FROM date '1992/11/13') AS DAY; -- 13
+SELECT EXTRACT (MONTH FROM date '1992/11/13') AS MONTH; -- 11
+SELECT EXTRACT (MONTH FROM date '1992/11/13') AS MONTH; -- 11
+
+Round a date: (Some Scenarios refresh month-year-day)
+SELECT DATE_TRUNC('year', date '1992/11/13'); -- 1992-01-01 (Normalized Day)
+
+Beginning OF
+SELECT DATE_TRUNC('month', date '1992/11/13'); -- 1992-11-01 (Normalized Day)
+SELECT DATE_TRUNC('day', date '1992/11/13'); -- 1992-11-13 
+-- If you pass the day, well it's not going to do anything unless it was 
+-- a timestamp, case it will set of all the values in the timestamp to zero is the starting to make
+-- sense that truncate
+
+class#41 (Intervals)
+
+Intervals:
+It give us to easy to talk about time in a readable manner.
+-- Intervals allows us to write queries in a way that mirrors language.
+-- IT can store and manipulate a period of time in years, months, days, hours, minutes, seconds, etc.
+
+SELECT * FROM orders 
+WHERE purchaseDate <= now() - interval '30 days';
+-- 30 days before given date
+
+-- Interval
+--  Identifier
+      Years     
+      Months
+      Days
+      Hours
+      Minute
+
+INTERVAL '1 year 2 months 3 days';
+INTERVAL '2 weeks ago';
+INTERVAL '1 year 3 hours 20 minutes';
+
+EXTRACTING?
+SELECT 
+  EXTRACT (
+    year 
+    FROM 
+       INTERVAL '5 years 20 months'
+  ) --date_part  6
+
+class#42 (Exercise Date and Timestamp)
+
+/*
+* DB: Employees
+* Table: employees
+* Question: Get me all the employees above 60, use the appropriate date functions
+*/
+
+SELECT * FROM employees;
+
+/*
+* DB: Employees
+* Table: employees
+* Question: How many employees where hired in February?
+*/
+
+SELECT * FROM employees;
+
+/*
+* DB: Employees
+* Table: employees
+* Question: How many employees were born in november?
+*/
+
+SELECT * FROM employees;
+
+/*
+* DB: Employees
+* Table: employees
+* Question: Who is the oldest employee? (Use the analytical function MAX)
+*/
+
+SELECT * FROM employees;
+
+/*
+* DB: Store
+* Table: orders
+* Question: How many orders were made in January 2004?
+*/
+
+SELECT * FROM orders;
+
+class#43 (DISTINCT)
+DISTINCT Keyword:
+Remove Duplicates.
+-- DISTINCT clause keeps one row for each group of duplicates.
+SELECT DISTINCT <col>, <col2> FROM <table>;
+SELECT DISTINCT gender FROM employees;
+
+class#44 (Exercise DISTINCT Keyword)
+
+class#45 (Sorting Data)
+ORDER BY
+SELECT * FROM customers
+ORDER BY <column> [ASC/DESC];
+-- Sort data either ascending or descending by column.
+
+SELECT * FROM customers 
+ORDER BY name ASC;
+
+SELECT * FROM employees 
+ORDER BY first_name ASC;
+
+SELECT * FROM employees 
+ORDER BY first_name DESC;
+
+SELECT * FROM employees 
+ORDER BY first_name, last_name DESC; -- first_name (ASC) and last_name (DESC)
+      OR
+SELECT * FROM employees 
+ORDER BY first_name, last_name DESC; -- first_name (ASC) and last_name (DESC)
+
+
+SELECT * FROM employees 
+ORDER BY first_name DESC, last_name DESC; -- first_name (DESC) and last_name (DESC)
+
+Using expressions:
+
+SEELECT * FROM customers 
+ORDER BY LENGTH(first_name) DESC;
+
+class#46 (Multi table Select)
+
+Multi table select:
+Combining the data in multiple table
+
+SELECT a.emp_no,
+       CONCAT(a.first_name, a.last_name) as "name",
+       b.salary
+FROM employees as a, salaries as b;
+
+What did we do?
+We Joined 2 Datasets.
+
+JOINS:
+A Join combines columns from one table with those of another.
+Take a comun from one table that can map to the column of another table.
+Most common approach? Like primary key to foriegn key.
+
+class#47 (Inner Join)
+
+Inner JOINS
+If you have a columns that links the column from table A To Table B You can use an inner join.
+
+SELECT a.emp_no,
+       CONCAT(a.first_name, a.last_name) as "name",
+       b.salary
+FROM employees as a, salaries as b;
+
+Difference:
+The inner join is generally considered a best practice its more readable
+than using the where syntax it shows you whats being joined its great.
+
+SELECT  a.emp_no, b.salary, b.from_date FROM employees AS a, salaries AS b
+WHERE a.emp_no = b.emp_no
+ORDER BY a.emp_no;
+
+SELECT a.emp_no, 
+        CONCAT(a.first_name, a.last_name) as "name"
+        b.salary
+    FROM employees as a 
+    INNER JOIN salaries as b ON b.emp_no = a.emp_no;
+
+-- A join combiner column from one table with those of another
+
+-- Sorting
+SELECT a.emp_no, CONCAT(a.first_name, a.last_name) as "name",
+b.salary
+FROM employees as a
+INNER JOIN salaries as b ON b.emp_no = a.emp_no
+ORDER BY a.emp_no ASC, b.form_date ASC;
+
+SELECT a.emp_no,
+       CONCAT(a.first_name, a.last_name) as "name",
+       b.salary,
+       c.title,
+       c.from_date AS "promoted on"
+FROM employees AS a 
+INNER JOIN salaries as b ON a.emp_no = b.emp_no
+INNER titles AS c ON c.emp_no = a.emp_no
+AND c.from_date = (b.from_date + interval '2 days')
+ORDER BY a.emp_no;
+
+SELECT a.emp_no, b.salary,b.from_date, c.title
+FROM employees AS a 
+INNER JOIN salaries as b ON b.emp_no = a.emp_no
+INNER JOIN titles AS c ON c.emp_no = a.emp_no 
+AND (b.from_date + INTERVAL '2 days') = c.from_date
+ORDER BY a.emp_no ASC, b.from_date ASC;
+
+-- Title Change Always follow 2 days after the raise.
+SELECT a.emp_no,
+       CONCAT(a.first_name, a.last_name) as "name"
+       b.salary,
+       coalesce(c.title, 'No title change'),
+       COALESCE(c.from_date::text, '-') AS "title take on"
+FROM employees AS a
+INNER JOIN salaries as b ON a.emp_no = b.emp_no
+INNER JOIN titles AS c
+ON c.emp_no = a.emp_no AND (
+   c.from_date = (b.from_date + INTERVAL '2 days') OR 
+   c.from_date = b.from_date
+)
+ORDER BY a.emp_no;
+
+-- ITs Hard
+-- INNER JOINS CAN BECOME MORE COMPLICATED AS YOU ASS MORE TABLES THAT
+-- YOU WANT TO COMBINE.
+
+class#(youtube)
+JOINS Topic (youtube):
+A Join is a means for combining fields two tables (or more) by using values common to each.
+RDMS: In two table one table field is common.
+
+Types of JOINS:
+1. Inner Join.
+2. Left Join.
+3. Right join
+4. Full Join 
+5. Natural Join
+6. Cross Join
+
+1. Inner Join:
+Returns all rows when there is at least one match in both tables.
+   LEFT JOIN:
+   Return all rows from the Left table, and the matched rows from the right table.
+
+   RIGHT JOIN:
+   Return all rows from the right table, and the matched rows from the left table.
+
+   FULL JOIN:
+   Return all rows when there is a match in one of these tables.
+
+ON: use in condition
+
+JOIN or INNER JOIN (no difference);
+SELECT * FROM EMPLOYEE 
+INNER JOIN EMP_DEPT ON EMPLOYEE.EMP_ID = EMP_DEPT.EMP_ID;
+               OR
+SELECT * FROM EMPLOYEE 
+JOIN EMP_DEPT ON EMPLOYEE.EMP_ID = EMP_DEPT.EMP_ID;
+
+LEFT JOIN, LEFT Outer Join:
+
+SELECT * FROM EMPLOYEE 
+LEFT JOIN EMP_DEPT ON EMPLOYEE.EMP_ID = EMP_DEPT.EMP_ID;
+
+SELECT * FROM EMPLOYEE 
+LEFT OUTER JOIN EMP_DEPT ON EMPLOYEE.EMP_ID = EMP_DEPT.EMP_ID;
+
+RIGHT JOIN, Right Outer Join:
+SELECT * FROM EMPLOYEE 
+RIGHT JOIN EMP_DEPT ON EMPLOYEE.EMP_ID = EMP_DEPT.EMP_ID;
+
+SELECT * FROM EMPLOYEE 
+RIGHT OUTER JOIN EMP_DEPT ON EMPLOYEE.EMP_ID = EMP_DEPT.EMP_ID;
+
+SELECT * FROM EMPLOYEE E1
+RIGHT OUTER JOIN EMP_DEPT E2 ON E1.EMP_ID = E2.EMP_ID;
+
+ -- Natural Join
+A Natural join is a join Operation that creates an implicit join clause for you based
+on the common columns in the two tables being joined.
+
+A Natural Join can be an INNER join, a LEFT join, or a Right join. The default is INNER join.
+-- Note: Difference b\w Inner join and natural join. In natural join without condition.
+-- Work as inner join.
+SELECT * FROM EMPLOYEE 
+NATURAL FULL JOIN EMP_DEPT;
+
+Cross Join:
+The cartesian Join or cross join returns the cartesian product of the sets of records from the two or 
+more joined tables.
+
+class#48 (Self Join)
+Joining a table to itself.
+This usually can be done when a table has a foreign key refrencing its primary key.
+e.g supervisor id:
+ 1  2
+ 2  2
+
+SELECT a.id, a.name as "employee", b.name as "supervisor name"
+FROM employee as a, employee as b
+WHERE a.supervisorId = b.id;
+
+class#49  (OUTER JOIN)
+OUTER JOIN:
+OUTER JOINS ADD The data that dont have a match from Table A.
+
+LEFT OUTER JOIN:
+OUTER JOINS ADD The data that dont have a match from Table A.
+Any value that does not match is made to be null.
+You want to know how many employees are not managers?
+
+
+SELECT * 
+FROM <table A> AS a
+LEFT [OUTER] JOIN <table B> AS b
+ON a.id = b.id;
+
+SELECT COUNT(emp.emp_no)
+FROM employees AS emp
+LEFT JOIN dept_manager AS dep ON emp.emp_no = dep.emp_no
+WHERE dep.emp_no IS NULL;
+
+
+
+class#50 (Less Common Joins)
+There are more join techniques they just are not used that often
+1. Cross join (Create a combination of Every row) called cartesian product. Combination of everything and everything.
+-- CREATE TABLE "cartesianA" (id INT);
+-- CREATE TABLE "cartesianB" (id INt);
+-- 
+-- INSERT INTO "cartesianA" VALUEs (1);
+-- INSERT INTO "cartesianA" VALUEs (2);
+-- INSERT INTO "cartesianA" VALUEs (3);
+-- 
+-- INSERT INTO "cartesianB" VALUEs (1);
+-- INSERT INTO "cartesianB" VALUEs (1);
+
+-- Full Join
+SELECT * FROM "cartesianA" AS a
+FULL JOIN "cartesianB" AS b ON a.id = b.id;
+-- Return results from both whether they match or not
+
+
+SELECT * FROM "cartesianA"
+CROSS JOIN "cartesianB"
+
+
+
+
+class#51 (Inner Join Exercise)
+
+
+class#52 (Using Keyword)
+Simplifying the join syntax.
+
+SELECT e.emp_no, e.first_name, de.dept_no
+FROM employees AS e
+INNER JOIN dept_emp AS de ON de.emp_no = e.emp_no;
+
+SELECT e.emp_no, e.first_name, de.dept_no
+FROM employees AS e
+INNER JOIN dept_emp AS de USING(emp_no)
+INNER JOIN departments AS d USING(dept_no);
+
+
+SELECT e.emp_no, e.first_name, de.dept_no
+FROM employees AS e
+INNER JOIN dept_emp AS de ON d.emp_no = e.emp_no
+INNER JOIN departments AS d USING(dept_no);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
