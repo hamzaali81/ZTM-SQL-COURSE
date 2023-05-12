@@ -1,0 +1,110 @@
+1. SQL GROUP BY Statement
+The GROUP BY statement groups rows that have the same values into summary rows, 
+like "find the number of customers in each country".
+
+The GROUP BY statement is often used with aggregate 
+functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+
+The SQL GROUP BY clause is used in conjunction with the SELECT statement to arrange identical 
+data into groups. This GROUP BY clause follows the WHERE clause in a SELECT statement and 
+precedes the ORDER BY or HAVING clause (if they exist). It is often used with aggregate functions 
+like SUM, COUNT, AVG, MAX, or MIN, which allows us to perform calculations on the grouped data.
+
+For example, let us suppose you have a table of sales data consisting of date, product, and sales 
+amount. To calculate the total sales of an organization in an year, 
+the GROUP BY clause can be used to group the sales of products together. 
+Similarly, you can group the data by date to calculate the total sales for each day, or by a combination 
+of product and date to calculate the total sales for each product on each day.
+
+SELECT column_name(s)
+FROM table_name
+GROUP BY column_name(s);
+
+SELECT AGE, AVG(SALARY) as avg_salary
+FROM CUSTOMERS
+GROUP BY age
+
++-----+--------------+
+| AGE | avg_salary   |
++-----+--------------+
+|  22 |  4500.000000 |
+|  23 |  2000.000000 |
+|  24 | 10000.000000 |
+|  25 |  4000.000000 |
+|  27 |  8500.000000 |
+|  32 |  2000.000000 |
++-----+--------------+
+
+
+ORDER BY
+
+2. SQL HAVING Clause
+The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+SQL HAVING clause is similar to the WHERE clause; they are both used to filter rows in a table based
+on conditions. However, the HAVING clause was included in SQL to filter grouped rows instead of 
+single rows. These rows are grouped together by the GROUP BY clause, so, the HAVING clause must 
+always be followed by the GROUP BY clause. It can be used with aggregate functions, 
+whereas the WHERE clause cannot.
+HAVING clause can also contain multiple conditions in it to filter the grouped results.
+These conditions are separated by various operators like AND, OR etc.
+
+SELECT column1, column2, aggregate_function(column)
+FROM table_name
+GROUP BY column1, column2
+HAVING condition;
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
+
+GROUP BY Mental Models:
+
+limitations
+SELECT emp_no, MAX(from_date), MAX(salary)
+FROM salaries 
+GROUP BY emp_no;
+
+
+GROUPING SETS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

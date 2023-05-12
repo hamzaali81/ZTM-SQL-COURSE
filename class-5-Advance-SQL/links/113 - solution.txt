@@ -1,0 +1,1 @@
+https://github.com/mobinni/Complete-SQL-Database-Bootcamp-Zero-to-Mastery/blob/master/SQL%20Deep%20Dive/Grouping%20Sets/solutions.sql

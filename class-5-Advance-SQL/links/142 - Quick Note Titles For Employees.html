@@ -1,0 +1,6 @@
+<p>In the video "Using Subqueries" we see a query where we try to apply combine titles with salaries to see the salary changes per title live. In the video "Inner Join"&nbsp;we stated that each title change happens <strong>2 days AFTER </strong>a salary bump<strong>. </strong></p><p><br></p><p>Our query did not take this fact into account and so for each employee we would only see the initial title, but not the subsequent title changes. In order to address this we need to add the following to the query:</p><p><br></p><pre class="prettyprint linenums">select emp_no, salary, from_date, 
+    (select title from titles as t 
+     where t.emp_no=s.emp_no and 
+    (t.from_date = s.from_date + interval '2 days' or t.from_date=s.from_date))
+from salaries as s
+order by emp_no;</pre><p><br></p><p>This will catch both the cases where the initial title was given and any salaries linked to a subsequent title change!</p>
