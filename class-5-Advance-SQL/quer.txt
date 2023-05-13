@@ -66,15 +66,75 @@ FROM salaries
 GROUP BY emp_no;
 
 
-GROUPING SETS
+4. GROUPING SETS
+Questions:
+What if we want to combine multiple grouping results?
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+GROUPING SETS:
+Allow us to combine the multiple grouping.
+A subclause of group by that allows you to define multiple groupings.
+
+
+Every SELECT statement within UNION must have the same number of columns
+The columns must also have similar data types
+The columns in every SELECT statement must also be in the same order
+
+SELECT col1, SUM(col2) 
+FROM table GROUP BY col1
+
+UNION Syntax
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+
+UNION ALL Syntax
+The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+
+
+The SQL UNION Operator
+SELECT SUM(col2) 
+FROM table;
 
 
 
 
+SELECT NULL AS "prod_id", sum(ol.quantity)
+FROM orderlines AS ol 
+
+UNION
+
+SELECT prod_id AS "prod_id", sum(ol.quantity)
+FROM orderlines AS ol 
+GROUP BY prod_id
+ORDER BY prod_id DESC;
+
+or
+
+SELECT prod_id AS "prod_id", sum(ol.quantity)
+FROM orderlines AS ol
+GROUP BY 
+   GROUPING SETS ( // Combining output of multiple things
+    (),
+    (prod_id),
+    (orderlineid)
+   )
+ORDER BY prod_id DESC;
 
 
 
+5. Window What
+SELECT d.dept_name, ROUND(AVG(salary))
+FROM salaries
+join dept_emp as de USING(emp_no)
+JOIN departments as d USING(dept_no)
+GROUP BY dept_no, dept_name;
 
+WINDOW FUNCTIONS: (End mein)
+Window functions create a new column based on functions performed on a subset
+or "Window" of the data
 
 
 
